@@ -19,7 +19,10 @@ def ai_work():
 
 
     # 1.录 用户语音
-    userrec.record()
+    state = userrec.record()
+    if state = False:   # 唤醒后太久没说话
+        led.set_off()
+        return
 
         
     # 2.用户语音 转 文字
