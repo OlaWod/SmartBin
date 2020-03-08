@@ -3,7 +3,10 @@ from light import Light
 import duvoice
 import aibrain
 import userrec
+import classify
+
 import urllib3
+import time
 
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)# 忽略百度api连接时的报错信息。
@@ -34,7 +37,17 @@ def ai_work():
     if user_text==False:   # 结果有误
         print("AI说: " + ai_text)
     else:                   # 结果无误
-        ai_text = aibrain.ai_think(user_text)   
+        result = classify.get_type(user_text)  # 从话中提取垃圾种类
+        
+        if result==False:   # 没有说任何垃圾
+            ai_text = aibrain.ai_think(user_text)   # 思知机器人回答
+        else:
+            lid = steer.Steer(result[1])    # 垃圾种类对应的盖子
+            lid.open()
+            ai_text = result[0]+'是'+result[1]   # 回答xx是xx垃圾
+            time.sleep(10)  # 打开10秒
+            lid.close()
+            
 
 
     # 4.AI文字 转 语音
