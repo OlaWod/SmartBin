@@ -1,4 +1,5 @@
 import json
+import os
 from aip import AipSpeech
 
 
@@ -44,7 +45,7 @@ def text_to_speech(ai_text):
     if not isinstance(result, dict):
         with open('aisay.mp3', 'wb') as f:
             f.write(result)
-        os.system('aisay.mp3')
+        os.system('mpg123 '+'aisay.mp3')
 
 
 
