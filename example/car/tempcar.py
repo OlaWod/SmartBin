@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
-SLEEP_TIME = 1
+SLEEP_TIME = 2
 #定义GPIO信号
 INT1 = 21
 INT2 = 20
@@ -59,7 +59,7 @@ def go_stop(sleep_time):
 if __name__=='__main__':
     init()
     go_stop(1)
-
+    
     go_forward(SLEEP_TIME)
     go_back(SLEEP_TIME)
     go_left(SLEEP_TIME)

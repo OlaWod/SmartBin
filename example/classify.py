@@ -25,8 +25,11 @@ rubbish.update(r)
 def get_type(string):
     
     seg_list = jieba.cut(string, cut_all=True)  # 全模式
+    #print(list(seg_list))
+    #print(rubbish)
     
     for x in seg_list:
+        print(x)
         if x in rubbish:
             return x,rubbish[x]
         
@@ -38,7 +41,7 @@ def get_type(string):
 
 if __name__=='__main__':    # 模块测试
 
-    string = "废纸是什么垃圾"
+    string = "废纸是什么？垃圾？"
 
     result = get_type(string)
     

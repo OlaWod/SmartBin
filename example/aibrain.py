@@ -32,4 +32,4 @@ def ai_think(user_text):
 
 
 if __name__=='__main__':    # 模块测试
-    print(ai_think('明天天气如何'))
+    print(ai_think('你会唱小星星吗'))
