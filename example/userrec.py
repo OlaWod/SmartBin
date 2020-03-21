@@ -1,6 +1,7 @@
 import pyaudio
 import wave
 import os
+import sys
 import time
 from light import Light
 from sensor import Sensor
@@ -10,7 +11,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
 RECORD_SECONDS = 60     # 最多60秒
-WAVE_OUTPUT_FILENAME = "usersay.wav"    # 文件名
+WAVE_OUTPUT_FILENAME = "./assets/usersay.wav"    # 文件名
 
 
 led = Light(18)

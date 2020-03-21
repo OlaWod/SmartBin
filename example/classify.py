@@ -1,15 +1,24 @@
 import jieba
-import mysql.connector
+import pandas as pd
 
+rubbish = dict()
+rubbish_data = pd.read_csv('./assets/rubbish.csv', encoding='gbk')
 
-mydb = mysql.connector.connect(
-  host="localhost",       # 数据库主机地址
-  user="root",    # 数据库用户名
-  passwd="root",   # 数据库密码
-  database="rubbish"
-)
- 
-mycursor = mydb.cursor()
+r = list(rubbish_data["可回收物"])
+r = dict.fromkeys(r, '可回收物')
+rubbish.update(r)
+
+r = list(rubbish_data["有害垃圾"])
+r = dict.fromkeys(r, '有害垃圾')
+rubbish.update(r)
+
+r = list(rubbish_data["厨余垃圾"])
+r = dict.fromkeys(r, '厨余垃圾')
+rubbish.update(r)
+
+r = list(rubbish_data["其他垃圾"])
+r = dict.fromkeys(r, '其他垃圾')
+rubbish.update(r)
 
 
 
@@ -18,11 +27,8 @@ def get_type(string):
     seg_list = jieba.cut(string, cut_all=True)  # 全模式
     
     for x in seg_list:
-        mycursor.execute("SELECT type FROM rubbishs where name='"+x+"'")
-        myresult = mycursor.fetchall()
-        
-        if myresult!=[]:
-            return x,myresult[0][0]
+        if x in rubbish:
+            return x,rubbish[x]
         
     return False
 

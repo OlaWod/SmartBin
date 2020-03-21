@@ -16,7 +16,7 @@ client = AipSpeech(APP_ID,API_KEY,SECRET_KEY)
 # 语音转文字
 def speech_to_text():
     
-    with open('usersay.wav', 'rb') as f:
+    with open('./assets/usersay.wav', 'rb') as f:
         audio_data = f.read()
 
     result = client.asr(audio_data, 'wav', 16000, {
@@ -43,9 +43,9 @@ def text_to_speech(ai_text):
     
     # 识别正确返回语音二进制 错误则返回dict 参照下面错误码
     if not isinstance(result, dict):
-        with open('aisay.mp3', 'wb') as f:
+        with open('./assets/aisay.mp3', 'wb') as f:
             f.write(result)
-        os.system('mpg123 '+'aisay.mp3')
+        os.system('mpg123 '+'./assets/aisay.mp3')
 
 
 
