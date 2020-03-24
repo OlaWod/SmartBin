@@ -12,7 +12,7 @@ def interrupt_callback():
     return interrupted
 
 
-model = './assets/小白.pmdl'  #唤醒词，叫小白吧，因为小白样本多
+model = './assets/阿兹卡班.pmdl'  #唤醒词
 
 signal.signal(signal.SIGINT, signal_handler)
 
