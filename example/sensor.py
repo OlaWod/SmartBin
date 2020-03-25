@@ -8,3 +8,11 @@ class Sensor(object):
 
     def hear_sound(self):
         return GPIO.input(self.port)==0
+
+
+if __name__=='__main__':
+    sensor = Sensor(17)
+    while True:
+        if sensor.hear_sound():
+            print('sound detected')
+            break

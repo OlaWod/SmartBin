@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遥控树莓派</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <style type="text/css">
+        #front {
+            margin-left: 55px;
+            margin-bottom: 3px;
+        }
+        #rear{
+            margin-top: 3px;
+            margin-left: 55px;
+        }
+        .btn{
+             background: #62559f;
+            }
+    </style>
+    <script>
+  var socket;
+        function init() {
+            var host = "ws://192.168.1.111:8081/";
+            try {
+                socket = new WebSocket(host);
+                socket.onopen = function () {
+                 
+                };
+                socket.onmessage = function () {
+                    
+                };
+                socket.onclose = function () {
+                    
+                };
+            }
+            catch (ex) {
+                
+            }
+           
+        }
+        function send(msg) {
+            try {
+                socket.send(msg);
+            } catch (ex) {
+                
+            }
+        }
+        window.onbeforeunload = function () {
+            try {
+                socket.send('quit');
+                socket.close();
+                socket = null;
+            }
+            catch (ex) {
+                
+            }
+        };
+     
+       
+ 
+ 
+    </script>
+</head>
+<body οnlοad="init()">
+<div id="container" class="container">
+    
+    <div>
+        <button id="front" class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-up" οnclick="send('front')"></button>
+    </div>
+    <div>
+ 
+        <button id='leftFront' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-left" οnclick="send('leftFront')"></button>
+        <button id='stop' class="btn btn-lg btn-primary glyphicon glyphicon-stop" οnclick="send('stop')"></button>
+        <button id='rightFront' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-right" οnclick="send('rightFront')"></button>
+    </div>
+    <div  style＝"height:50px;">
+        <button id='rear' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-down" οnclick="send('rear')"></button>
+    </div>
+    <div style＝"height:20px;"></div>
+     <div style＝"height:50px;">
+        <button id='leftRear' class="btn btn-lg btn-primary glyphicon" οnclick="send('leftRear')">左后转</button>
+        <button id='rightRear' class="btn btn-lg btn-primary glyphicon" οnclick="send('rightRear')">右后转</button>
+    </div>
+     <div style＝"height:20px;"></div>
+    <div  style＝"height:50px;">
+        <button id='q1' class="btn btn-lg btn-primary glyphicon" οnclick="send('q1')">P1</button>
+        <button id='q2' class="btn btn-lg btn-primary glyphicon" οnclick="send('q2')">P2</button>
+        <button id='q3' class="btn btn-lg btn-primary glyphicon" οnclick="send('q3')">P3</button>
+        <div style＝"height:20px;"></div>
+        <button id='q4' class="btn btn-lg btn-primary glyphicon" οnclick="send('q4')">P4</button>
+        <button id='q5' class="btn btn-lg btn-primary glyphicon" οnclick="send('q5')">P5</button>
+    </div>
+</div>
+ 
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

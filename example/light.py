@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 class Light(object):
     def __init__(self, port):
@@ -31,3 +32,11 @@ class Light(object):
         self.set_on()
         time.sleep(t)
         self.set_off()
+        
+        
+if __name__=='__main__':
+    led1 = Light(26)
+    led1.blink()
+    led2 = Light(19)
+    led2.blink()
+    GPIO.cleanup()

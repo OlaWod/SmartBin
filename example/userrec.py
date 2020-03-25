@@ -4,7 +4,7 @@ import os
 import sys
 import time
 #from light import Light
-#from sensor import Sensor
+from sensor import Sensor
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -15,7 +15,7 @@ WAVE_OUTPUT_FILENAME = "./assets/usersay.wav"    # 文件名
 
 
 #led = Light(18)
-#mysensor = Sensor(4)
+mysensor = Sensor(17)
 
 
 def wait_sound():
@@ -38,7 +38,7 @@ def wait_sound():
                 else:   # 有效，开始录音
                     return True
                     
-        if time.time()-no_sound_time_begin > 300: # 等待超过5分钟
+        if time.time()-no_sound_time_begin > 60: # 等待超过1分钟
             return False
 
 
@@ -47,8 +47,8 @@ def record():
     
     #os.close(sys.stderr.fileno())   # 隐藏错误消息，因为会有一堆ALSA和JACK错误消息，但其实能正常录音
 
-    #if wait_sound()==False: # 等待超时
-     #   return False
+    if wait_sound()==False: # 等待超时
+        return False
     
     p = pyaudio.PyAudio()
 
@@ -68,7 +68,7 @@ def record():
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):  # 最多60秒
         data = stream.read(CHUNK)
         frames.append(data)
-        '''
+        
         # 判断空气是否安静很久
         if not mysensor.hear_sound():    # 没声音了
             
@@ -82,7 +82,7 @@ def record():
                     no_sound_time_begin = this_time
                 else:   # 有效，结束录音
                     break
-            '''
+            
 
     print("* done recording")
 

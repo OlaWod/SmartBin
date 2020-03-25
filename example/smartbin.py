@@ -1,6 +1,6 @@
 import wakeuptool
-#from light import Light
-#from steer import Steer
+from light import Light
+from steer import Steer
 import iflytrans
 import duvoice
 import aibrain
@@ -13,27 +13,30 @@ import time
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)# 忽略百度api连接时的报错信息。
 
-#led = Light(17) # LED灯
+led1 = Light(26) # LED灯1,录音时亮
+led2 = Light(19) # LED灯2,AI处理时亮
 
 def ai_work():
     
     wakeuptool.detector.terminate() # 结束监控热词
     
     wakeuptool.snowboydecoder.play_audio_file() # ding一声
-    #led.set_on()    # 开灯
+    led1.set_on()    # 开灯
 
 
     # 1.录 用户语音
     state = userrec.record()
     if state == False:   # 唤醒后太久没说话
-        #led.set_off()
+        led.set_off()
         return
-
+    led1.set_off()
+    
         
+    led2.set_on()
     # 2.用户语音 转 文字
     ai_text = "你说啥"
-    user_text = iflytrans.get_usertext()
-    #user_text = duvoice.speech_to_text() # 获得语音的文字结果
+    user_text = iflytrans.get_usertext() # 获得语音的文字结果
+    #user_text = duvoice.speech_to_text()
 
     
     # 3.获得 AI文字
@@ -45,19 +48,17 @@ def ai_work():
         if result==False:   # 没有说任何垃圾
             ai_text = aibrain.ai_think(user_text)   # 思知机器人回答
         else:
-            #lid = steer.Steer(result[1])    # 垃圾种类对应的盖子
-            #lid.open()
+            lid = Steer(result[1])    # 垃圾种类对应的盖子
+            lid.open()
             ai_text = result[0]+'是'+result[1]   # 回答xx是xx垃圾
-            #time.sleep(10)  # 打开10秒
-            #lid.close()
+            time.sleep(5)  # 打开5秒
+            lid.close()
             
 
 
     # 4.AI文字 转 语音
     duvoice.text_to_speech(ai_text)
-
-
-    #led.set_off()   # 关灯
+    led2.set_off()   # 关灯
 
     
 
